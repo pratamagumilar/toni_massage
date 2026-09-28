@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@theme {
+  /* ==== Palet Dark Luxury Bronze ==== */
+  --color-batik-950: #120b05;
+  --color-batik-900: #1a1108;
+  --color-batik-800: #2a1b0e;
+  --color-batik-700: #3a2716;
+  --color-batik-600: #4d3520;
+
+  --color-gold-400: #e8cd7d;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #c5a059;
+  --color-gold-700: #9a7b3c;
+
+  --color-cream-50: #fbf6ea;
+  --color-cream-100: #f5ecd8;
+  --color-cream-200: #e9dcc0;
+  --color-cream-300: #d8c49b;
+
+  --color-wa-500: #25d366;
+  --color-wa-600: #1ebe5a;
+  --color-wa-700: #17a34d;
+
+  /* ==== Tipografi ==== */
+  --font-display: var(--font-cinzel), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+
+  /* ==== Animasi ==== */
+  --animate-pulse-cta: pulse-cta 2.2s ease-in-out infinite;
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+  --animate-shimmer: shimmer 3.5s linear infinite;
+
+  @keyframes pulse-cta {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 0 rgba(37, 211, 102, 0.55),
+        0 10px 30px -8px rgba(37, 211, 102, 0.6);
+    }
+    50% {
+      box-shadow:
+        0 0 0 14px rgba(37, 211, 102, 0),
+        0 10px 30px -8px rgba(37, 211, 102, 0.4);
+    }
+  }
+
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Kompensasi sticky header saat anchor diklik */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-batik-950);
+    color: var(--color-cream-100);
+    font-family: var(--font-sans);
+    /* Ruang untuk sticky bottom bar di mobile */
+    padding-bottom: env(safe-area-inset-bottom);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-500);
+    color: var(--color-batik-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* ==== Permukaan & kartu ==== */
+  .surface-card {
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--color-batik-800) 92%, transparent),
+        color-mix(in oklab, var(--color-batik-900) 96%, transparent)
+      );
+    border: 1px solid color-mix(in oklab, var(--color-gold-600) 22%, transparent);
+    border-radius: 1rem;
+    backdrop-filter: blur(2px);
+  }
+
+  .surface-card-hover {
+    transition:
+      border-color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .surface-card-hover:hover {
+    border-color: color-mix(in oklab, var(--color-gold-500) 55%, transparent);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -22px rgba(212, 175, 55, 0.55);
+  }
+
+  /* ==== Teks gradasi emas ==== */
+  .text-gold-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold-400) 0%,
+      var(--color-gold-500) 35%,
+      var(--color-cream-100) 55%,
+      var(--color-gold-600) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ==== Garis pemisah ornamen ==== */
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    color: var(--color-gold-600);
+  }
+
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: "";
+    height: 1px;
+    width: clamp(2rem, 12vw, 6rem);
+    background: linear-gradient(
+      to var(--dir, right),
+      transparent,
+      var(--color-gold-600)
+    );
+  }
+
+  .ornament-divider::after {
+    --dir: left;
+  }
+
+  /* ==== Ornamen batik / ukiran halus di background ==== */
+  .batik-bg {
+    background-image:
+      radial-gradient(
+        circle at 12% 18%,
+        rgba(212, 175, 55, 0.09),
+        transparent 42%
+      ),
+      radial-gradient(
+        circle at 88% 8%,
+        rgba(197, 160, 89, 0.07),
+        transparent 38%
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23d4af37' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M60 6c10 14 26 20 26 38S70 82 60 96 34 82 34 44 50 20 60 6z'/%3E%3Cpath d='M60 20c6 9 16 13 16 25s-10 26-16 35-16-23-16-35 10-16 16-25z'/%3E%3Ccircle cx='60' cy='52' r='6'/%3E%3Cpath d='M6 60c14-10 20-26 38-26M114 60c-14-10-20-26-38-26M6 60c14 10 20 26 38 26M114 60c-14 10-20 26-38 26'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:
+      auto,
+      auto,
+      120px 120px;
+  }
+
+  /* ==== Kilau bergerak untuk elemen emas ==== */
+  .gold-shimmer {
+    background-image: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(251, 246, 234, 0.35) 50%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  .btn-wa {
+    background: linear-gradient(
+      180deg,
+      var(--color-wa-500),
+      var(--color-wa-600)
+    );
+    color: #06240f;
+    font-weight: 700;
+  }
+
+  .btn-wa:hover {
+    background: linear-gradient(
+      180deg,
+      #2ee878,
+      var(--color-wa-600)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
