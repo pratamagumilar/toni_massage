@@ -17,8 +17,16 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+function getMetadataBase(): URL {
+  try {
+    return new URL(site.url);
+  } catch {
+    return new URL("https://pijatkangtoni.id");
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: getMetadataBase(),
   title: {
     default: `${site.tagline} - Pijat Panggilan ke Rumah, Hotel & Apartemen`,
     template: `%s | ${site.name}`,

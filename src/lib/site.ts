@@ -3,18 +3,41 @@
  * Ubah nilai di file ini (atau lewat environment variable) tanpa menyentuh komponen.
  */
 
+function resolveSiteUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (envUrl) {
+    return envUrl.startsWith("http://") || envUrl.startsWith("https://")
+      ? envUrl
+      : `https://${envUrl}`;
+  }
+
+  const vercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (vercelProd) {
+    return `https://${vercelProd}`;
+  }
+
+  const vercelUrl = process.env.VERCEL_URL?.trim();
+  if (vercelUrl) {
+    return `https://${vercelUrl}`;
+  }
+
+  return "https://pijatkangtoni.id";
+}
+
 export const site = {
   name: 'Pijat Tradisional Jawa "Kang Toni"',
   shortName: "Kang Toni",
   tagline: "Pijat Tradisional Jawa Panggilan 24 Jam",
   description:
     "Layanan pijat tradisional Jawa panggilan 24 jam ke rumah, hotel, apartemen & kost. Terapis berpengalaman, bertenaga, higienis, dan profesional. Bugar kembali tanpa perlu keluar rumah.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pijatkangtoni.id",
+  url: resolveSiteUrl(),
 
   /** Format internasional tanpa tanda + dan tanpa spasi. Contoh: 6283100592361 */
-  whatsappNumber: process.env.NEXT_PUBLIC_WA_NUMBER ?? "6283100592361",
+  whatsappNumber:
+    process.env.NEXT_PUBLIC_WA_NUMBER?.trim() || "6283100592361",
   /** Nomor telepon untuk tombol "Panggil Sekarang" (format lokal). */
-  phoneNumber: process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "+62 831-0059-2361",
+  phoneNumber:
+    process.env.NEXT_PUBLIC_PHONE_NUMBER?.trim() || "+62 831-0059-2361",
 
   city: "Bandung & Sekitarnya",
   hours: "Buka 24 Jam, Setiap Hari",
